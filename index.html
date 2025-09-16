@@ -2,34 +2,41 @@
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>App Financeiro - Home</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
   <body class="bg-gray-100 flex flex-col min-h-screen">
     <!-- Header -->
-    <header class="p-4 bg-white shadow">
-      <h1 class="text-xl font-bold text-gray-800">Olá, Lucas!</h1>
-      <p class="text-sm text-gray-500">
+    <header class="p-4 sm:p-6 bg-white shadow">
+      <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800">
+        Olá, Lucas!
+      </h1>
+      <p class="text-base sm:text-lg md:text-xl text-gray-500 mt-1">
         Aqui está sua visão financeira de hoje
       </p>
     </header>
 
     <!-- Conteúdo principal -->
-    <main class="flex-1 p-4 lg:p-8 lg:max-w-5xl lg:mx-auto mb-24">
+    <main class="flex-1 p-4 sm:p-6 lg:p-8 lg:max-w-5xl lg:mx-auto mb-24">
       <!-- Grid saldo + gráfico -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-6">
         <!-- Saldo Total -->
         <div
-          class="bg-blue-500 text-white rounded-2xl shadow p-6 flex flex-col justify-center text-center"
+          class="bg-blue-500 text-white rounded-2xl shadow p-4 sm:p-6 flex flex-col justify-center text-center"
         >
-          <p class="text-lg">Saldo Total</p>
-          <h2 class="text-3xl md:text-4xl font-bold">R$ 3.250,00</h2>
+          <p class="text-lg sm:text-xl md:text-2xl">Saldo Total</p>
+          <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold">
+            R$ 3.250,00
+          </h2>
         </div>
 
         <!-- Gráfico de Linha -->
-        <div class="bg-white rounded-2xl shadow p-6">
-          <h3 class="text-lg font-semibold text-gray-800 mb-4">
+        <div class="bg-white rounded-2xl shadow p-4 sm:p-6">
+          <h3
+            class="text-lg sm:text-xl md:text-2xl font-semibold text-gray-800 mb-4"
+          >
             Evolução do Saldo
           </h3>
           <canvas id="saldoChart"></canvas>
@@ -37,13 +44,15 @@
       </div>
 
       <!-- Últimas transações -->
-      <div class="bg-white rounded-2xl shadow p-6">
-        <h3 class="text-lg font-semibold text-gray-800 mb-4">
+      <div class="bg-white rounded-2xl shadow p-4 sm:p-6">
+        <h3
+          class="text-lg sm:text-xl md:text-2xl font-semibold text-gray-800 mb-4"
+        >
           Últimas transações
         </h3>
-        <ul class="space-y-2 text-gray-700">
+        <ul class="space-y-2 text-gray-700 text-base sm:text-lg">
           <li
-            class="flex justify-between cursor-pointer hover:bg-gray-100 rounded-lg p-2"
+            class="flex justify-between cursor-pointer hover:bg-gray-100 rounded-lg p-2 sm:p-3"
           >
             <a
               href="transacoes.html?tipo=entrada&categoria=salario"
@@ -54,7 +63,7 @@
             </a>
           </li>
           <li
-            class="flex justify-between cursor-pointer hover:bg-gray-100 rounded-lg p-2"
+            class="flex justify-between cursor-pointer hover:bg-gray-100 rounded-lg p-2 sm:p-3"
           >
             <a
               href="transacoes.html?tipo=saida&categoria=mercado"
@@ -65,7 +74,7 @@
             </a>
           </li>
           <li
-            class="flex justify-between cursor-pointer hover:bg-gray-100 rounded-lg p-2"
+            class="flex justify-between cursor-pointer hover:bg-gray-100 rounded-lg p-2 sm:p-3"
           >
             <a
               href="transacoes.html?tipo=saida&categoria=uber"
@@ -81,16 +90,15 @@
 
     <!-- Barra de Navegação -->
     <nav
-      class="fixed bottom-0 w-full bg-blue-500 shadow-2xl border-b-4 border-black/20 z-50 p-4 flex justify-around lg:justify-center lg:gap-12"
+      class="fixed bottom-0 w-full bg-blue-500 shadow-2xl border-b-4 border-black/20 z-50 p-3 sm:p-4 flex justify-around lg:justify-center lg:gap-12"
     >
       <a
         href="index.html"
-        class="flex flex-col items-center text-white hover:text-blue-200"
+        class="flex flex-col items-center text-white hover:text-blue-200 bg-blue-600 rounded-2xl px-1 py-1"
       >
-        <!-- Home -->
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="w-6 h-6"
+          class="w-6 h-6 sm:w-7 sm:h-7"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -102,16 +110,15 @@
             d="M3 12l9-9 9 9m-2 9V9h-4v6H9V9H5v12z"
           />
         </svg>
-        <span class="text-xs">Home</span>
+        <span class="text-sm sm:text-base">Home</span>
       </a>
       <a
         href="transacoes.html"
         class="flex flex-col items-center text-white hover:text-blue-200"
       >
-        <!-- Transações -->
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="w-6 h-6"
+          class="w-6 h-6 sm:w-7 sm:h-7"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -123,16 +130,15 @@
             d="M9 17v-6h6v6h5v-8h-5V7h-6v2H4v8h5z"
           />
         </svg>
-        <span class="text-xs">Transações</span>
+        <span class="text-sm sm:text-base">Transações</span>
       </a>
       <a
         href="adicionar.html"
         class="flex flex-col items-center text-white hover:text-blue-200"
       >
-        <!-- Adicionar -->
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="w-6 h-6"
+          class="w-6 h-6 sm:w-7 sm:h-7"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -144,16 +150,15 @@
             d="M12 4v16m8-8H4"
           />
         </svg>
-        <span class="text-xs">Adicionar</span>
+        <span class="text-sm sm:text-base">Adicionar</span>
       </a>
       <a
         href="relatorios.html"
         class="flex flex-col items-center text-white hover:text-blue-200"
       >
-        <!-- Relatórios -->
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="w-6 h-6"
+          class="w-6 h-6 sm:w-7 sm:h-7"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -165,16 +170,15 @@
             d="M3 3v18h18M9 17v-5h6v5"
           />
         </svg>
-        <span class="text-xs">Relatórios</span>
+        <span class="text-sm sm:text-base">Relatórios</span>
       </a>
       <a
         href="config.html"
         class="flex flex-col items-center text-white hover:text-blue-200"
       >
-        <!-- Configurações -->
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="w-6 h-6"
+          class="w-6 h-6 sm:w-7 sm:h-7"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -186,7 +190,7 @@
             d="M12 4v2m0 12v2m8-8h2M2 12h2M16.24 7.76l1.42-1.42M4.34 19.66l1.42-1.42M16.24 16.24l1.42 1.42M4.34 4.34l1.42 1.42"
           />
         </svg>
-        <span class="text-xs">Config</span>
+        <span class="text-sm sm:text-base">Config</span>
       </a>
     </nav>
 
