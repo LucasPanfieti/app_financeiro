@@ -16,7 +16,7 @@
     </header>
 
     <!-- Conteúdo principal -->
-    <main class="flex-1 p-4 lg:p-8 lg:max-w-5xl lg:mx-auto">
+    <main class="flex-1 p-4 lg:p-8 lg:max-w-5xl lg:mx-auto mb-24">
       <!-- Grid saldo + gráfico -->
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
         <!-- Saldo Total -->
@@ -81,41 +81,111 @@
 
     <!-- Barra de Navegação -->
     <nav
-      class="bg-white shadow p-4 flex justify-around lg:justify-center lg:gap-12"
+      class="fixed bottom-0 w-full bg-blue-500 shadow-2xl border-b-4 border-black/20 z-50 p-4 flex justify-around lg:justify-center lg:gap-12"
     >
       <a
         href="index.html"
-        class="flex flex-col items-center text-gray-500 hover:text-blue-600"
+        class="flex flex-col items-center text-white hover:text-blue-200"
       >
-        <span class="text-xl">🏠</span>
+        <!-- Home -->
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-6 h-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M3 12l9-9 9 9m-2 9V9h-4v6H9V9H5v12z"
+          />
+        </svg>
         <span class="text-xs">Home</span>
       </a>
       <a
         href="transacoes.html"
-        class="flex flex-col items-center text-gray-500 hover:text-blue-600"
+        class="flex flex-col items-center text-white hover:text-blue-200"
       >
-        <span class="text-xl">📂</span>
+        <!-- Transações -->
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-6 h-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M9 17v-6h6v6h5v-8h-5V7h-6v2H4v8h5z"
+          />
+        </svg>
         <span class="text-xs">Transações</span>
       </a>
       <a
         href="adicionar.html"
-        class="flex flex-col items-center text-gray-500 hover:text-blue-600"
+        class="flex flex-col items-center text-white hover:text-blue-200"
       >
-        <span class="text-xl">➕</span>
+        <!-- Adicionar -->
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-6 h-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 4v16m8-8H4"
+          />
+        </svg>
         <span class="text-xs">Adicionar</span>
       </a>
       <a
         href="relatorios.html"
-        class="flex flex-col items-center text-gray-500 hover:text-blue-600"
+        class="flex flex-col items-center text-white hover:text-blue-200"
       >
-        <span class="text-xl">📊</span>
+        <!-- Relatórios -->
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-6 h-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M3 3v18h18M9 17v-5h6v5"
+          />
+        </svg>
         <span class="text-xs">Relatórios</span>
       </a>
       <a
         href="config.html"
-        class="flex flex-col items-center text-gray-500 hover:text-blue-600"
+        class="flex flex-col items-center text-white hover:text-blue-200"
       >
-        <span class="text-xl">⚙️</span>
+        <!-- Configurações -->
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-6 h-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 4v2m0 12v2m8-8h2M2 12h2M16.24 7.76l1.42-1.42M4.34 19.66l1.42-1.42M16.24 16.24l1.42 1.42M4.34 4.34l1.42 1.42"
+          />
+        </svg>
         <span class="text-xs">Config</span>
       </a>
     </nav>
