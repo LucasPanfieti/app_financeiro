@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>App Financeiro - Home</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body class="bg-gray-100 flex flex-col min-h-screen">
+    <!-- Header -->
+    <header class="p-4 bg-white shadow">
+      <h1 class="text-xl font-bold text-gray-800">Olá, Lucas!</h1>
+      <p class="text-sm text-gray-500">
+        Aqui está sua visão financeira de hoje
+      </p>
+    </header>
+
+    <!-- Conteúdo principal -->
+    <main class="flex-1 p-4 lg:p-8 lg:max-w-5xl lg:mx-auto">
+      <!-- Grid saldo + gráfico -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+        <!-- Saldo Total -->
+        <div
+          class="bg-blue-500 text-white rounded-2xl shadow p-6 flex flex-col justify-center text-center"
+        >
+          <p class="text-lg">Saldo Total</p>
+          <h2 class="text-3xl md:text-4xl font-bold">R$ 3.250,00</h2>
+        </div>
+
+        <!-- Gráfico de Linha -->
+        <div class="bg-white rounded-2xl shadow p-6">
+          <h3 class="text-lg font-semibold text-gray-800 mb-4">
+            Evolução do Saldo
+          </h3>
+          <canvas id="saldoChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Últimas transações -->
+      <div class="bg-white rounded-2xl shadow p-6">
+        <h3 class="text-lg font-semibold text-gray-800 mb-4">
+          Últimas transações
+        </h3>
+        <ul class="space-y-2 text-gray-700">
+          <li
+            class="flex justify-between cursor-pointer hover:bg-gray-100 rounded-lg p-2"
+          >
+            <a
+              href="transacoes.html?tipo=entrada&categoria=salario"
+              class="flex justify-between w-full"
+            >
+              <span>Salário</span>
+              <span class="text-green-500 font-bold">+ R$ 3.500,00</span>
+            </a>
+          </li>
+          <li
+            class="flex justify-between cursor-pointer hover:bg-gray-100 rounded-lg p-2"
+          >
+            <a
+              href="transacoes.html?tipo=saida&categoria=mercado"
+              class="flex justify-between w-full"
+            >
+              <span>Mercado</span>
+              <span class="text-red-500 font-bold">- R$ 120,00</span>
+            </a>
+          </li>
+          <li
+            class="flex justify-between cursor-pointer hover:bg-gray-100 rounded-lg p-2"
+          >
+            <a
+              href="transacoes.html?tipo=saida&categoria=uber"
+              class="flex justify-between w-full"
+            >
+              <span>Uber</span>
+              <span class="text-red-500 font-bold">- R$ 30,00</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </main>
+
+    <!-- Barra de Navegação -->
+    <nav
+      class="bg-white shadow p-4 flex justify-around lg:justify-center lg:gap-12"
+    >
+      <a
+        href="index.html"
+        class="flex flex-col items-center text-gray-500 hover:text-blue-600"
+      >
+        <span class="text-xl">🏠</span>
+        <span class="text-xs">Home</span>
+      </a>
+      <a
+        href="transacoes.html"
+        class="flex flex-col items-center text-gray-500 hover:text-blue-600"
+      >
+        <span class="text-xl">📂</span>
+        <span class="text-xs">Transações</span>
+      </a>
+      <a
+        href="adicionar.html"
+        class="flex flex-col items-center text-gray-500 hover:text-blue-600"
+      >
+        <span class="text-xl">➕</span>
+        <span class="text-xs">Adicionar</span>
+      </a>
+      <a
+        href="relatorios.html"
+        class="flex flex-col items-center text-gray-500 hover:text-blue-600"
+      >
+        <span class="text-xl">📊</span>
+        <span class="text-xs">Relatórios</span>
+      </a>
+      <a
+        href="config.html"
+        class="flex flex-col items-center text-gray-500 hover:text-blue-600"
+      >
+        <span class="text-xl">⚙️</span>
+        <span class="text-xs">Config</span>
+      </a>
+    </nav>
+
+    <!-- Script Chart.js -->
+    <script>
+      const ctx = document.getElementById("saldoChart").getContext("2d");
+      new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: ["01", "05", "10", "15", "20", "25", "30"],
+          datasets: [
+            {
+              label: "Saldo",
+              data: [2800, 3000, 2900, 3200, 3100, 3300, 3250],
+              borderColor: "rgb(59, 130, 246)",
+              backgroundColor: "rgba(59, 130, 246, 0.2)",
+              fill: true,
+              tension: 0.4,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          plugins: { legend: { display: false } },
+          scales: { y: { beginAtZero: false } },
+        },
+      });
+    </script>
+  </body>
+</html>

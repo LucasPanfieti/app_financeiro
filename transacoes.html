@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Transações</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      const urlParams = new URLSearchParams(window.location.search);
+      const tipoFiltro = urlParams.get("tipo"); // 'entrada' ou 'saida'
+      const categoriaFiltro = urlParams.get("categoria"); // 'Mercado', 'Alimentação', etc
+
+      const transacoes = document.querySelectorAll("ul li");
+      transacoes.forEach((li) => {
+        const a = li.querySelector("a");
+        const tipo = a.href.includes("tipo=entrada")
+          ? "entrada"
+          : a.href.includes("tipo=saida")
+          ? "saida"
+          : null;
+        const categoria = a.href.split("categoria=")[1]?.toLowerCase();
+
+        if (
+          (tipoFiltro && tipoFiltro !== tipo) ||
+          (categoriaFiltro && categoriaFiltro.toLowerCase() !== categoria)
+        ) {
+          li.style.display = "none";
+        }
+      });
+    </script>
+  </head>
+  <body class="bg-gray-100 flex flex-col min-h-screen">
+    <!-- Header -->
+    <header class="p-4 bg-white shadow">
+      <h1 class="text-xl font-bold text-gray-800">Transações</h1>
+    </header>
+
+    <!-- Conteúdo principal -->
+    <main class="flex-1 p-4 space-y-4 lg:max-w-4xl lg:mx-auto">
+      <!-- Filtros -->
+      <div
+        class="bg-white p-4 rounded-2xl shadow flex flex-col md:flex-row gap-4 md:gap-6"
+      >
+        <select class="w-full md:w-1/3 p-3 rounded-lg border border-gray-300">
+          <option>Período: Mês Atual</option>
+          <option>Últimos 3 meses</option>
+          <option>Personalizado</option>
+        </select>
+        <select class="w-full md:w-1/3 p-3 rounded-lg border border-gray-300">
+          <option>Tipo: Todos</option>
+          <option>Entrada</option>
+          <option>Saída</option>
+        </select>
+        <select class="w-full md:w-1/3 p-3 rounded-lg border border-gray-300">
+          <option>Categoria: Todas</option>
+          <option>Alimentação</option>
+          <option>Transporte</option>
+          <option>Lazer</option>
+          <option>Outros</option>
+        </select>
+      </div>
+
+      <!-- Lista de transações -->
+      <div
+        class="bg-white p-4 rounded-2xl shadow overflow-y-auto max-h-[400px]"
+      >
+        <ul class="divide-y divide-gray-200">
+          <li class="flex justify-between items-center py-2">
+            <div class="flex flex-col">
+              <span class="font-semibold">Salário</span>
+              <span class="text-gray-500 text-sm">01/09 | Entrada</span>
+            </div>
+            <span class="text-green-500 font-bold">+ R$ 3.500,00</span>
+          </li>
+          <li class="flex justify-between items-center py-2">
+            <div class="flex flex-col">
+              <span class="font-semibold">Mercado</span>
+              <span class="text-gray-500 text-sm">02/09 | Saída</span>
+            </div>
+            <span class="text-red-500 font-bold">- R$ 120,00</span>
+          </li>
+          <li class="flex justify-between items-center py-2">
+            <div class="flex flex-col">
+              <span class="font-semibold">Uber</span>
+              <span class="text-gray-500 text-sm">03/09 | Saída</span>
+            </div>
+            <span class="text-red-500 font-bold">- R$ 30,00</span>
+          </li>
+          <li class="flex justify-between items-center py-2">
+            <div class="flex flex-col">
+              <span class="font-semibold">Cinema</span>
+              <span class="text-gray-500 text-sm">04/09 | Saída</span>
+            </div>
+            <span class="text-red-500 font-bold">- R$ 50,00</span>
+          </li>
+          <!-- Adicione mais transações aqui -->
+        </ul>
+      </div>
+
+      <!-- Botão Adicionar -->
+      <a
+        href="adicionar.html"
+        class="block bg-blue-500 hover:bg-blue-600 text-white text-center font-bold py-3 rounded-2xl mt-4"
+      >
+        + Adicionar Transação
+      </a>
+    </main>
+
+    <!-- Barra de Navegação -->
+    <nav
+      class="bg-white shadow p-4 flex justify-around lg:justify-center lg:gap-12"
+    >
+      <a
+        href="index.html"
+        class="flex flex-col items-center text-gray-500 hover:text-blue-600"
+      >
+        <span class="text-xl">🏠</span>
+        <span class="text-xs">Home</span>
+      </a>
+      <a
+        href="transacoes.html"
+        class="flex flex-col items-center text-gray-500 hover:text-blue-600"
+      >
+        <span class="text-xl">📂</span>
+        <span class="text-xs">Transações</span>
+      </a>
+      <a
+        href="adicionar.html"
+        class="flex flex-col items-center text-gray-500 hover:text-blue-600"
+      >
+        <span class="text-xl">➕</span>
+        <span class="text-xs">Adicionar</span>
+      </a>
+      <a
+        href="relatorios.html"
+        class="flex flex-col items-center text-gray-500 hover:text-blue-600"
+      >
+        <span class="text-xl">📊</span>
+        <span class="text-xs">Relatórios</span>
+      </a>
+      <a
+        href="config.html"
+        class="flex flex-col items-center text-gray-500 hover:text-blue-600"
+      >
+        <span class="text-xl">⚙️</span>
+        <span class="text-xs">Config</span>
+      </a>
+    </nav>
+  </body>
+</html>
