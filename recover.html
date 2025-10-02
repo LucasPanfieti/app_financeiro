@@ -3,31 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login</title>
+    <title>Restaurar</title>
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body
     class="h-screen flex items-center justify-center bg-gradient-to-b from-white to-[#dcd6f7] font-sans"
   >
     <div class="w-[90%] max-w-[350px] p-5 text-center">
-      <h1 class="text-[#0a0099] mb-2 text-3xl font-bold">Seja Bem Vindo</h1>
-      <p class="text-gray-600 mb-5 font-bold">Efetue seu login</p>
-
-      <!-- Botão Google -->
-      <div
-        class="flex items-center justify-center w-[55px] h-[55px] mx-auto mb-5 rounded-full bg-white shadow-md cursor-pointer"
-      >
-        <img
-          src="https://www.svgrepo.com/show/475656/google-color.svg"
-          alt="Google Login"
-          class="w-7"
-        />
-      </div>
+      <h1 class="text-[#0a0099] mb-4 text-3xl font-bold">Restaure sua Senha</h1>
 
       <form id="loginForm" class="text-left">
         <div class="mb-4">
           <label for="usuario" class="block mb-1 text-sm text-gray-800"
-            >E-mail ou Usuário</label
+            >E-mail</label
           >
           <input
             type="text"
@@ -37,35 +25,15 @@
           />
         </div>
 
-        <div class="mb-4">
-          <label for="senha" class="block mb-1 text-sm text-gray-800"
-            >Senha</label
-          >
-          <input
-            type="password"
-            id="senha"
-            required
-            class="w-full p-2.5 border border-gray-400 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
-
-        <div class="text-sm mb-3 text-center">
-          Não possui registro?
-          <a href="register.html" class="text-blue-600 hover:underline"
-            >Clique aqui</a
-          >
-        </div>
-
         <button
           type="submit"
-          class="w-full py-3 bg-[#0a0099] text-white text-base rounded-full hover:bg-[#000048] transition-colors"
+          class="w-full py-3 bg-[#0a0099] text-white text-base rounded-full hover:bg-[#000048] transition-colors mt-3"
         >
-          Acessar
+          Enviar Código
         </button>
-
         <div class="text-sm mt-3 text-center">
-          Esqueceu a senha?
-          <a href="recover.html" class="text-blue-600 hover:underline"
+          Lembrou a senha?
+          <a href="index.html" class="text-blue-600 hover:underline"
             >Clique aqui</a
           >
         </div>
