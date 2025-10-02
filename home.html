@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Relatórios</title>
+    <title>App Financeiro - Home</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
@@ -11,73 +11,77 @@
     <!-- Header -->
     <header class="p-4 sm:p-6 bg-white shadow">
       <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800">
-        Relatórios
+        Olá, Lucas!
       </h1>
+      <p class="text-base sm:text-lg md:text-xl text-gray-500 mt-1">
+        Aqui está sua visão financeira de hoje
+      </p>
     </header>
 
-    <!-- Conteúdo -->
-    <main class="flex-1 p-4 sm:p-6 space-y-6 lg:max-w-4xl lg:mx-auto mb-24">
-      <!-- Filtro -->
-      <div class="bg-white p-4 sm:p-6 rounded-2xl shadow">
-        <label class="block text-gray-700 mb-1 text-base sm:text-lg"
-          >Período</label
+    <!-- Conteúdo principal -->
+    <main class="flex-1 p-4 sm:p-6 lg:p-8 lg:max-w-5xl lg:mx-auto mb-24">
+      <!-- Grid saldo + gráfico -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-6">
+        <!-- Saldo Total -->
+        <div
+          class="bg-blue-500 text-white rounded-2xl shadow p-4 sm:p-6 flex flex-col justify-center text-center"
         >
-        <select
-          class="w-full p-3 sm:p-4 rounded-lg border border-gray-300 text-base sm:text-lg"
+          <p class="text-lg sm:text-xl md:text-2xl">Saldo Total</p>
+          <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold">
+            R$ 3.250,00
+          </h2>
+        </div>
+
+        <!-- Gráfico de Linha -->
+        <div class="bg-white rounded-2xl shadow p-4 sm:p-6">
+          <h3
+            class="text-lg sm:text-xl md:text-2xl font-semibold text-gray-800 mb-4"
+          >
+            Evolução do Saldo
+          </h3>
+          <canvas id="saldoChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Últimas transações -->
+      <div class="bg-white rounded-2xl shadow p-4 sm:p-6">
+        <h3
+          class="text-lg sm:text-xl md:text-2xl font-semibold text-gray-800 mb-4"
         >
-          <option>Mês Atual</option>
-          <option>Últimos 3 meses</option>
-          <option>Personalizado</option>
-        </select>
-      </div>
-
-      <!-- Gráfico Pizza -->
-      <div class="bg-white p-4 sm:p-6 rounded-2xl shadow">
-        <h3 class="text-lg sm:text-xl font-semibold text-gray-800 mb-4">
-          Distribuição por Categoria
-        </h3>
-        <canvas id="pizzaChart"></canvas>
-      </div>
-
-      <!-- Gráfico Linha -->
-      <div class="bg-white p-4 sm:p-6 rounded-2xl shadow">
-        <h3 class="text-lg sm:text-xl font-semibold text-gray-800 mb-4">
-          Evolução do Saldo
-        </h3>
-        <canvas id="lineChart"></canvas>
-      </div>
-
-      <!-- Totais por Categoria -->
-      <div class="bg-white p-4 sm:p-6 rounded-2xl shadow">
-        <h3 class="text-lg sm:text-xl font-semibold text-gray-800 mb-4">
-          Resumo por Categoria
+          Últimas transações
         </h3>
         <ul class="space-y-2 text-gray-700 text-base sm:text-lg">
-          <li>
+          <li
+            class="flex justify-between cursor-pointer hover:bg-gray-100 rounded-lg p-2 sm:p-3"
+          >
             <a
-              href="transacoes.html?categoria=Alimentação"
-              class="flex justify-between hover:bg-gray-100 rounded-lg p-2 sm:p-3"
+              href="transacoes.html?tipo=entrada&categoria=salario"
+              class="flex justify-between w-full"
             >
-              <span>Alimentação</span>
-              <span>R$ 850,00</span>
+              <span>Salário</span>
+              <span class="text-green-500 font-bold">+ R$ 3.500,00</span>
             </a>
           </li>
-          <li>
+          <li
+            class="flex justify-between cursor-pointer hover:bg-gray-100 rounded-lg p-2 sm:p-3"
+          >
             <a
-              href="transacoes.html?categoria=Transporte"
-              class="flex justify-between hover:bg-gray-100 rounded-lg p-2 sm:p-3"
+              href="transacoes.html?tipo=saida&categoria=mercado"
+              class="flex justify-between w-full"
             >
-              <span>Transporte</span>
-              <span>R$ 220,00</span>
+              <span>Mercado</span>
+              <span class="text-red-500 font-bold">- R$ 120,00</span>
             </a>
           </li>
-          <li>
+          <li
+            class="flex justify-between cursor-pointer hover:bg-gray-100 rounded-lg p-2 sm:p-3"
+          >
             <a
-              href="transacoes.html?categoria=Lazer"
-              class="flex justify-between hover:bg-gray-100 rounded-lg p-2 sm:p-3"
+              href="transacoes.html?tipo=saida&categoria=uber"
+              class="flex justify-between w-full"
             >
-              <span>Lazer</span>
-              <span>R$ 120,00</span>
+              <span>Uber</span>
+              <span class="text-red-500 font-bold">- R$ 30,00</span>
             </a>
           </li>
         </ul>
@@ -90,7 +94,7 @@
     >
       <a
         href="home.html"
-        class="flex flex-col items-center text-white hover:text-blue-200"
+        class="flex flex-col items-center text-white hover:text-blue-200 bg-blue-600 rounded-2xl px-1 py-1"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -150,7 +154,7 @@
       </a>
       <a
         href="relatorios.html"
-        class="flex flex-col items-center text-white hover:text-blue-200 bg-blue-600 rounded-2xl px-1 py-1"
+        class="flex flex-col items-center text-white hover:text-blue-200"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -192,28 +196,8 @@
 
     <!-- Script Chart.js -->
     <script>
-      // Pizza Chart
-      new Chart(document.getElementById("pizzaChart"), {
-        type: "pie",
-        data: {
-          labels: ["Alimentação", "Transporte", "Lazer", "Outros"],
-          datasets: [
-            {
-              data: [850, 220, 120, 310],
-              backgroundColor: [
-                "rgb(59, 130, 246)",
-                "rgb(234, 179, 8)",
-                "rgb(239, 68, 68)",
-                "rgb(34, 197, 94)",
-              ],
-            },
-          ],
-        },
-        options: { responsive: true },
-      });
-
-      // Line Chart
-      new Chart(document.getElementById("lineChart"), {
+      const ctx = document.getElementById("saldoChart").getContext("2d");
+      new Chart(ctx, {
         type: "line",
         data: {
           labels: ["01", "05", "10", "15", "20", "25", "30"],
