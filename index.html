@@ -10,10 +10,9 @@
     class="h-screen flex items-center justify-center bg-gradient-to-b from-white to-[#dcd6f7] font-sans"
   >
     <div class="w-[90%] max-w-[350px] p-5 text-center">
-      <h1 class="text-[#0a0099] mb-2 text-3xl font-bold">Seja Bem Vindo</h1>
+      <h1 class="text-blue-500 mb-2 text-3xl font-bold">Seja Bem Vindo</h1>
       <p class="text-gray-600 mb-5 font-bold">Efetue seu login</p>
 
-      <!-- Botão Google -->
       <div
         class="flex items-center justify-center w-[55px] h-[55px] mx-auto mb-5 rounded-full bg-white shadow-md cursor-pointer"
       >
@@ -58,7 +57,7 @@
 
         <button
           type="submit"
-          class="w-full py-3 bg-[#0a0099] text-white text-base rounded-full hover:bg-[#000048] transition-colors"
+          class="w-full py-3 bg-blue-500 text-white text-base rounded-full hover:bg-blue-700 transition-colors"
         >
           Acessar
         </button>
@@ -76,12 +75,16 @@
       document
         .getElementById("loginForm")
         .addEventListener("submit", function (e) {
-          e.preventDefault(); // impede o reload da página
-
+          e.preventDefault();
           const usuario = document.getElementById("usuario").value;
           const senha = document.getElementById("senha").value;
-
-          if (usuario === "admin" && senha === "admin") {
+          const users = JSON.parse(localStorage.getItem("users")) || [];
+          const user = users.find(
+            (u) => u.usuario === usuario && u.senha === senha
+          );
+          if (user) {
+            localStorage.setItem("loggedUser", JSON.stringify(user));
+            localStorage.setItem("nomeUsuario", user.usuario);
             window.location.href = "home.html";
           } else {
             alert("Usuário ou senha incorretos!");

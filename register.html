@@ -10,10 +10,9 @@
     class="h-screen flex items-center justify-center bg-gradient-to-b from-white to-[#dcd6f7] font-sans"
   >
     <div class="w-[90%] max-w-[350px] p-5 text-center">
-      <h1 class="text-[#0a0099] mb-2 text-3xl font-bold">Registre-se</h1>
+      <h1 class="text-blue-500 mb-2 text-3xl font-bold">Registre-se</h1>
       <p class="text-gray-600 mb-5 font-bold">Crie a sua conta</p>
 
-      <!-- Botão Google -->
       <div
         class="flex items-center justify-center w-[55px] h-[55px] mx-auto mb-5 rounded-full bg-white shadow-md cursor-pointer"
       >
@@ -24,7 +23,7 @@
         />
       </div>
 
-      <form id="loginForm" class="text-left">
+      <form id="registerForm" class="text-left">
         <div class="mb-4">
           <label for="usuario" class="block mb-1 text-sm text-gray-800"
             >E-mail ou Usuário</label
@@ -50,12 +49,12 @@
         </div>
 
         <div class="mb-4">
-          <label for="senha" class="block mb-1 text-sm text-gray-800"
+          <label for="confirmSenha" class="block mb-1 text-sm text-gray-800"
             >Confirme sua Senha</label
           >
           <input
             type="password"
-            id="senha"
+            id="confirmSenha"
             required
             class="w-full p-2.5 border border-gray-400 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
@@ -70,7 +69,7 @@
 
         <button
           type="submit"
-          class="w-full py-3 bg-[#0a0099] text-white text-base rounded-full hover:bg-[#000048] transition-colors"
+          class="w-full py-3 bg-blue-500 text-white text-base rounded-full hover:bg-blue-700 transition-colors"
         >
           Cadastrar
         </button>
@@ -79,18 +78,28 @@
 
     <script>
       document
-        .getElementById("loginForm")
+        .getElementById("registerForm")
         .addEventListener("submit", function (e) {
-          e.preventDefault(); // impede o reload da página
-
+          e.preventDefault();
           const usuario = document.getElementById("usuario").value;
           const senha = document.getElementById("senha").value;
+          const confirmSenha = document.getElementById("confirmSenha").value;
 
-          if (usuario === "admin" && senha === "admin") {
-            window.location.href = "home.html";
-          } else {
-            alert("Usuário ou senha incorretos!");
+          if (senha !== confirmSenha) {
+            alert("As senhas não coincidem!");
+            return;
           }
+
+          let users = JSON.parse(localStorage.getItem("users")) || [];
+          if (users.some((u) => u.usuario === usuario)) {
+            alert("Usuário já cadastrado!");
+            return;
+          }
+
+          users.push({ usuario, senha });
+          localStorage.setItem("users", JSON.stringify(users));
+          alert("Cadastro realizado com sucesso!");
+          window.location.href = "index.html";
         });
     </script>
   </body>
