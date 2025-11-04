@@ -23,11 +23,12 @@
           >Período</label
         >
         <select
+          id="periodo"
           class="w-full p-3 sm:p-4 rounded-lg border border-gray-300 text-base sm:text-lg"
         >
-          <option>Mês Atual</option>
-          <option>Últimos 3 meses</option>
-          <option>Personalizado</option>
+          <option value="mes">Mês Atual</option>
+          <option value="3meses">Últimos 3 meses</option>
+          <option value="todos">Todos</option>
         </select>
       </div>
 
@@ -52,34 +53,11 @@
         <h3 class="text-lg sm:text-xl font-semibold text-gray-800 mb-4">
           Resumo por Categoria
         </h3>
-        <ul class="space-y-2 text-gray-700 text-base sm:text-lg">
-          <li>
-            <a
-              href="transacoes.html?categoria=Alimentação"
-              class="flex justify-between hover:bg-gray-100 rounded-lg p-2 sm:p-3"
-            >
-              <span>Alimentação</span>
-              <span>R$ 850,00</span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="transacoes.html?categoria=Transporte"
-              class="flex justify-between hover:bg-gray-100 rounded-lg p-2 sm:p-3"
-            >
-              <span>Transporte</span>
-              <span>R$ 220,00</span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="transacoes.html?categoria=Lazer"
-              class="flex justify-between hover:bg-gray-100 rounded-lg p-2 sm:p-3"
-            >
-              <span>Lazer</span>
-              <span>R$ 120,00</span>
-            </a>
-          </li>
+        <ul
+          id="lista-categorias"
+          class="space-y-2 text-gray-700 text-base sm:text-lg"
+        >
+          <li class="text-gray-400 italic">Nenhuma transação encontrada.</li>
         </ul>
       </div>
     </main>
@@ -135,7 +113,7 @@
       </a>
       <a
         href="relatorios.html"
-        class="flex flex-col items-center text-white hover:text-blue-200 bg-blue-700 rounded-xl px-1"
+        class="flex flex-col items-center text-white bg-blue-700 rounded-xl px-1"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -162,26 +140,64 @@
           alt="Ícone"
           style="width: 30px; height: 30px"
         />
-
         <span class="text-sm sm:text-base">Config.</span>
       </a>
     </nav>
 
-    <!-- Script Chart.js -->
     <script>
-      // Pizza Chart
-      new Chart(document.getElementById("pizzaChart"), {
+      // === Pegar transações do localStorage ===
+      const transacoes = JSON.parse(localStorage.getItem("transacoes")) || [];
+
+      const listaCategorias = document.getElementById("lista-categorias");
+      const ctxPizza = document.getElementById("pizzaChart");
+      const ctxLinha = document.getElementById("lineChart");
+
+      // === Agrupar por categoria ===
+      const categorias = {};
+      transacoes.forEach((t) => {
+        const valor = Number(t.valor);
+        if (!categorias[t.categoria]) categorias[t.categoria] = 0;
+        categorias[t.categoria] += t.tipo === "entrada" ? valor : -valor;
+      });
+
+      const nomesCategorias = Object.keys(categorias);
+      const valoresCategorias = Object.values(categorias).map((v) =>
+        Math.abs(v)
+      );
+
+      // === Renderizar resumo ===
+      if (nomesCategorias.length > 0) {
+        listaCategorias.innerHTML = "";
+        nomesCategorias.forEach((cat, i) => {
+          const li = document.createElement("li");
+          li.innerHTML = `
+            <a href="transacoes.html?categoria=${encodeURIComponent(cat)}"
+              class="flex justify-between hover:bg-gray-100 rounded-lg p-2 sm:p-3">
+              <span>${cat}</span>
+              <span>R$ ${valoresCategorias[i]
+                .toFixed(2)
+                .replace(".", ",")}</span>
+            </a>
+          `;
+          listaCategorias.appendChild(li);
+        });
+      }
+
+      // === Pizza Chart ===
+      new Chart(ctxPizza, {
         type: "pie",
         data: {
-          labels: ["Alimentação", "Transporte", "Lazer", "Outros"],
+          labels: nomesCategorias,
           datasets: [
             {
-              data: [850, 220, 120, 310],
+              data: valoresCategorias,
               backgroundColor: [
-                "rgb(59, 130, 246)",
-                "rgb(234, 179, 8)",
-                "rgb(239, 68, 68)",
-                "rgb(34, 197, 94)",
+                "rgb(59,130,246)",
+                "rgb(234,179,8)",
+                "rgb(239,68,68)",
+                "rgb(34,197,94)",
+                "rgb(168,85,247)",
+                "rgb(244,114,182)",
               ],
             },
           ],
@@ -189,17 +205,32 @@
         options: { responsive: true },
       });
 
-      // Line Chart
-      new Chart(document.getElementById("lineChart"), {
+      // === Gráfico de linha (evolução do saldo) ===
+      const saldosPorData = {};
+      transacoes.forEach((t) => {
+        const data = t.data || "Sem data";
+        saldosPorData[data] =
+          (saldosPorData[data] || 0) +
+          (t.tipo === "entrada" ? Number(t.valor) : -Number(t.valor));
+      });
+
+      const labels = Object.keys(saldosPorData);
+      let acumulado = 0;
+      const dataSaldo = labels.map((d) => {
+        acumulado += saldosPorData[d];
+        return acumulado;
+      });
+
+      new Chart(ctxLinha, {
         type: "line",
         data: {
-          labels: ["01", "05", "10", "15", "20", "25", "30"],
+          labels,
           datasets: [
             {
               label: "Saldo",
-              data: [2800, 3000, 2900, 3200, 3100, 3300, 3250],
-              borderColor: "rgb(59, 130, 246)",
-              backgroundColor: "rgba(59, 130, 246, 0.2)",
+              data: dataSaldo,
+              borderColor: "rgb(59,130,246)",
+              backgroundColor: "rgba(59,130,246,0.2)",
               fill: true,
               tension: 0.4,
             },

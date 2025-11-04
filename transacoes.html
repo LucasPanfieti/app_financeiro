@@ -5,124 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Transações</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const tipoFiltro = urlParams.get("tipo"); // 'entrada' ou 'saida'
-        const categoriaFiltro = urlParams.get("categoria"); // 'Mercado', 'Alimentação', etc
-
-        const transacoes = document.querySelectorAll("ul li");
-        transacoes.forEach((li) => {
-          const a = li.querySelector("a");
-          const tipo = a?.href.includes("tipo=entrada")
-            ? "entrada"
-            : a?.href.includes("tipo=saida")
-            ? "saida"
-            : null;
-          const categoria = a?.href.split("categoria=")[1]?.toLowerCase();
-
-          if (
-            (tipoFiltro && tipoFiltro !== tipo) ||
-            (categoriaFiltro && categoriaFiltro.toLowerCase() !== categoria)
-          ) {
-            li.style.display = "none";
-          }
-        });
-      });
-    </script>
   </head>
   <body class="bg-gray-100 flex flex-col min-h-screen">
-    <!-- Header -->
     <header class="p-4 sm:p-6 bg-white shadow">
       <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800">
         Transações
       </h1>
     </header>
 
-    <!-- Conteúdo principal -->
     <main class="flex-1 p-4 sm:p-6 lg:max-w-4xl lg:mx-auto mb-24 space-y-4">
-      <!-- Filtros -->
-      <div
-        class="bg-white p-4 sm:p-6 rounded-2xl shadow flex flex-col md:flex-row gap-4 md:gap-6"
-      >
-        <select
-          class="w-full md:w-1/3 p-3 sm:p-4 rounded-lg border border-gray-300 text-base sm:text-lg"
-        >
-          <option>Período: Mês Atual</option>
-          <option>Últimos 3 meses</option>
-          <option>Personalizado</option>
-        </select>
-        <select
-          class="w-full md:w-1/3 p-3 sm:p-4 rounded-lg border border-gray-300 text-base sm:text-lg"
-        >
-          <option>Tipo: Todos</option>
-          <option>Entrada</option>
-          <option>Saída</option>
-        </select>
-        <select
-          class="w-full md:w-1/3 p-3 sm:p-4 rounded-lg border border-gray-300 text-base sm:text-lg"
-        >
-          <option>Categoria: Todas</option>
-          <option>Alimentação</option>
-          <option>Transporte</option>
-          <option>Lazer</option>
-          <option>Outros</option>
-        </select>
+      <div class="bg-white p-4 sm:p-6 rounded-2xl shadow">
+        <ul id="lista-transacoes" class="divide-y divide-gray-200"></ul>
       </div>
 
-      <!-- Lista de transações -->
-      <div
-        class="bg-white p-4 sm:p-6 rounded-2xl shadow overflow-y-auto max-h-[500px]"
-      >
-        <ul class="divide-y divide-gray-200">
-          <li class="flex justify-between items-center py-3 sm:py-4">
-            <div class="flex flex-col">
-              <span class="font-semibold text-base sm:text-lg">Salário</span>
-              <span class="text-gray-500 text-sm sm:text-base"
-                >01/09 | Entrada</span
-              >
-            </div>
-            <span class="text-green-500 font-bold text-base sm:text-lg"
-              >+ R$ 3.500,00</span
-            >
-          </li>
-          <li class="flex justify-between items-center py-3 sm:py-4">
-            <div class="flex flex-col">
-              <span class="font-semibold text-base sm:text-lg">Mercado</span>
-              <span class="text-gray-500 text-sm sm:text-base"
-                >02/09 | Saída</span
-              >
-            </div>
-            <span class="text-red-500 font-bold text-base sm:text-lg"
-              >- R$ 120,00</span
-            >
-          </li>
-          <li class="flex justify-between items-center py-3 sm:py-4">
-            <div class="flex flex-col">
-              <span class="font-semibold text-base sm:text-lg">Uber</span>
-              <span class="text-gray-500 text-sm sm:text-base"
-                >03/09 | Saída</span
-              >
-            </div>
-            <span class="text-red-500 font-bold text-base sm:text-lg"
-              >- R$ 30,00</span
-            >
-          </li>
-          <li class="flex justify-between items-center py-3 sm:py-4">
-            <div class="flex flex-col">
-              <span class="font-semibold text-base sm:text-lg">Cinema</span>
-              <span class="text-gray-500 text-sm sm:text-base"
-                >04/09 | Saída</span
-              >
-            </div>
-            <span class="text-red-500 font-bold text-base sm:text-lg"
-              >- R$ 50,00</span
-            >
-          </li>
-        </ul>
-      </div>
-
-      <!-- Botão Adicionar -->
       <a
         href="adicionar.html"
         class="block bg-blue-500 hover:bg-blue-600 text-white text-center font-bold py-3 sm:py-4 rounded-2xl mt-4 text-base sm:text-lg"
@@ -131,7 +26,6 @@
       </a>
     </main>
 
-    <!-- Barra de Navegação -->
     <nav
       class="fixed bottom-0 w-full bg-blue-500 shadow-2xl border-b-4 border-black/20 z-50 p-3 sm:p-4 flex justify-around lg:justify-center lg:gap-12"
     >
@@ -148,7 +42,7 @@
       </a>
       <a
         href="transacoes.html"
-        class="flex flex-col items-center text-white hover:text-blue-200 bg-blue-700 rounded-xl px-1"
+        class="flex flex-col items-center text-white bg-blue-700 rounded-xl px-1"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -209,9 +103,55 @@
           alt="Ícone"
           style="width: 30px; height: 30px"
         />
-
         <span class="text-sm sm:text-base">Config.</span>
       </a>
     </nav>
+
+    <script>
+      function carregarTransacoes() {
+        const lista = document.getElementById("lista-transacoes");
+        lista.innerHTML = "";
+
+        const transacoes = JSON.parse(localStorage.getItem("transacoes")) || [];
+
+        if (transacoes.length === 0) {
+          lista.innerHTML =
+            "<li class='text-center text-gray-500 py-4'>Nenhuma transação registrada.</li>";
+          return;
+        }
+
+        transacoes.forEach((t, index) => {
+          const li = document.createElement("li");
+          li.className =
+            "flex justify-between items-center p-3 sm:p-4 border-b border-gray-200";
+          li.innerHTML = `
+        <div>
+          <p class="text-gray-800 font-semibold">${t.descricao}</p>
+          <p class="text-gray-500 text-sm">${t.categoria} • ${t.data}</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="font-bold ${
+            t.tipo === "entrada" ? "text-green-500" : "text-red-500"
+          }">
+            ${t.tipo === "entrada" ? "+" : "-"} R$ ${Number(t.valor).toFixed(2)}
+          </span>
+          <button onclick="removerTransacao(${index})" 
+            class="text-red-500 hover:text-red-700 text-xl font-bold">×</button>
+        </div>
+      `;
+          lista.appendChild(li);
+        });
+      }
+
+      function removerTransacao(index) {
+        if (!confirm("Deseja remover esta transação?")) return;
+        const transacoes = JSON.parse(localStorage.getItem("transacoes")) || [];
+        transacoes.splice(index, 1);
+        localStorage.setItem("transacoes", JSON.stringify(transacoes));
+        carregarTransacoes();
+      }
+
+      document.addEventListener("DOMContentLoaded", carregarTransacoes);
+    </script>
   </body>
 </html>

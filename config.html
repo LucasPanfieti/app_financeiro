@@ -17,49 +17,53 @@
     <!-- Conteúdo -->
     <main class="flex-1 p-4 sm:p-6 space-y-6 lg:max-w-lg lg:mx-auto mb-24">
       <div class="bg-white p-6 sm:p-8 rounded-2xl shadow space-y-4">
+        <!-- Nome do Usuário -->
         <div>
-          <label class="block text-gray-700 mb-1 text-base sm:text-lg"
+          <label
+            for="nomeUsuario"
+            class="block text-gray-700 mb-1 text-base sm:text-lg"
             >Nome do Usuário</label
           >
           <input
             type="text"
-            value="Lucas"
+            id="nomeUsuario"
+            placeholder="Digite seu nome"
             class="w-full p-3 sm:p-4 rounded-lg border border-gray-300 text-base sm:text-lg"
           />
         </div>
 
-        <div>
-          <label class="block text-gray-700 mb-1 text-base sm:text-lg"
-            >Meta Mensal</label
-          >
-          <input
-            type="number"
-            placeholder="R$ 0,00"
-            class="w-full p-3 sm:p-4 rounded-lg border border-gray-300 text-base sm:text-lg"
-          />
-        </div>
-
+        <!-- Tema -->
         <div>
           <label class="block text-gray-700 mb-1 text-base sm:text-lg"
             >Tema</label
           >
           <div class="flex gap-4">
             <label class="flex items-center gap-2 text-base sm:text-lg">
-              <input type="radio" name="tema" checked />
+              <input type="radio" name="tema" value="claro" checked />
               <span>Claro</span>
             </label>
             <label class="flex items-center gap-2 text-base sm:text-lg">
-              <input type="radio" name="tema" />
+              <input type="radio" name="tema" value="escuro" />
               <span>Escuro</span>
             </label>
           </div>
         </div>
 
+        <!-- Botões -->
         <button
+          id="btnSalvar"
+          class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 sm:py-4 rounded-lg text-base sm:text-lg"
+        >
+          Salvar Alterações
+        </button>
+
+        <button
+          id="btnRedefinir"
           class="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-3 sm:py-4 rounded-lg text-base sm:text-lg"
         >
           Redefinir Dados
         </button>
+
         <button
           onclick="window.location.href='index.html'"
           class="w-full bg-gray-500 hover:bg-gray-600 text-white font-bold py-3 sm:py-4 rounded-lg text-base sm:text-lg"
@@ -147,9 +151,44 @@
           alt="Ícone"
           style="width: 30px; height: 30px"
         />
-
         <span class="text-sm sm:text-base">Config.</span>
       </a>
     </nav>
+
+    <!-- Script -->
+    <script>
+      const nomeInput = document.getElementById("nomeUsuario");
+      const btnSalvar = document.getElementById("btnSalvar");
+      const btnRedefinir = document.getElementById("btnRedefinir");
+
+      // Carrega nome salvo
+      window.addEventListener("load", () => {
+        const nomeSalvo = localStorage.getItem("nomeUsuario");
+        if (nomeSalvo) nomeInput.value = nomeSalvo;
+      });
+
+      // Salvar nome no localStorage
+      btnSalvar.addEventListener("click", () => {
+        const nome = nomeInput.value.trim();
+        if (nome === "") {
+          alert("Por favor, digite um nome válido.");
+          return;
+        }
+        localStorage.setItem("nomeUsuario", nome);
+        alert("Alterações salvas com sucesso!");
+      });
+
+      // Redefinir dados
+      btnRedefinir.addEventListener("click", () => {
+        if (
+          confirm("Tem certeza que deseja apagar todas as transações e dados?")
+        ) {
+          localStorage.removeItem("transacoes");
+          localStorage.removeItem("nomeUsuario");
+          alert("Todos os dados foram apagados!");
+          window.location.href = "index.html";
+        }
+      });
+    </script>
   </body>
 </html>
