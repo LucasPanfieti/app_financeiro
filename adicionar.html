@@ -7,14 +7,12 @@
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body class="bg-gray-100 flex flex-col min-h-screen">
-    <!-- Header -->
     <header class="p-4 sm:p-6 bg-white shadow">
       <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800">
         Adicionar Transação
       </h1>
     </header>
 
-    <!-- Conteúdo -->
     <main class="flex-1 p-4 sm:p-6 space-y-4 lg:max-w-lg lg:mx-auto mb-24">
       <div class="bg-white p-4 sm:p-6 rounded-2xl shadow space-y-4">
         <div>
@@ -23,6 +21,7 @@
           >
           <input
             type="number"
+            id="valor"
             placeholder="R$ 0,00"
             class="w-full p-3 sm:p-4 rounded-lg border border-gray-300 text-base sm:text-lg"
           />
@@ -34,6 +33,7 @@
           >
           <input
             type="text"
+            id="descricao"
             placeholder="Ex: Mercado"
             class="w-full p-3 sm:p-4 rounded-lg border border-gray-300 text-base sm:text-lg"
           />
@@ -45,7 +45,7 @@
           >
           <input
             type="date"
-            placeholder="Ex: 01/01/2023"
+            id="data"
             class="w-full p-3 sm:p-4 rounded-lg border border-gray-300 text-base sm:text-lg"
           />
         </div>
@@ -67,20 +67,22 @@
         </div>
 
         <div>
-          <label class="block text-gray-700 mb-1 text-base sm:text-lg"
-            >Categoria</label
+          <label
+            for="categoria"
+            class="block text-gray-700 mb-1 text-base sm:text-lg"
           >
-          <select
+            Categoria
+          </label>
+          <input
+            type="text"
+            id="categoria"
+            placeholder="Digite a categoria"
             class="w-full p-3 sm:p-4 rounded-lg border border-gray-300 text-base sm:text-lg"
-          >
-            <option>Alimentação</option>
-            <option>Transporte</option>
-            <option>Lazer</option>
-            <option>Outros</option>
-          </select>
+          />
         </div>
 
         <button
+          id="btnSalvar"
           class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 sm:py-4 rounded-lg text-base sm:text-lg"
         >
           Salvar
@@ -88,7 +90,6 @@
       </div>
     </main>
 
-    <!-- Barra de Navegação -->
     <nav
       class="fixed bottom-0 w-full bg-blue-500 shadow-2xl border-b-4 border-black/20 z-50 p-3 sm:p-4 flex justify-around lg:justify-center lg:gap-12"
     >
@@ -119,7 +120,7 @@
       </a>
       <a
         href="adicionar.html"
-        class="flex flex-col items-center text-white hover:text-blue-200 bg-blue-700 rounded-xl px-1"
+        class="flex flex-col items-center text-white bg-blue-700 rounded-xl px-1"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -166,9 +167,40 @@
           alt="Ícone"
           style="width: 30px; height: 30px"
         />
-
         <span class="text-sm sm:text-base">Config.</span>
       </a>
     </nav>
+
+    <script>
+      document.getElementById("btnSalvar").addEventListener("click", () => {
+        const valor = parseFloat(document.getElementById("valor").value);
+        const descricao = document.getElementById("descricao").value.trim();
+        const data = document.getElementById("data").value;
+        const tipo = document.querySelector(
+          'input[name="tipo"]:checked'
+        )?.value;
+        const categoria = document.getElementById("categoria").value;
+
+        if (!valor || !descricao || !data || !tipo) {
+          alert("Preencha todos os campos antes de salvar!");
+          return;
+        }
+
+        const novaTransacao = {
+          id: Date.now(),
+          valor,
+          descricao,
+          data,
+          tipo,
+          categoria,
+        };
+        const transacoes = JSON.parse(localStorage.getItem("transacoes")) || [];
+        transacoes.push(novaTransacao);
+        localStorage.setItem("transacoes", JSON.stringify(transacoes));
+
+        alert("Transação salva com sucesso!");
+        window.location.href = "transacoes.html";
+      });
+    </script>
   </body>
 </html>

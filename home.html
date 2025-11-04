@@ -10,8 +10,11 @@
   <body class="bg-gray-100 flex flex-col min-h-screen">
     <!-- Header -->
     <header class="p-4 sm:p-6 bg-white shadow">
-      <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800">
-        Olá, Lucas!
+      <h1
+        id="saudacao"
+        class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800"
+      >
+        Olá!
       </h1>
       <p class="text-base sm:text-lg md:text-xl text-gray-500 mt-1">
         Aqui está sua visão financeira de hoje
@@ -27,8 +30,11 @@
           class="bg-blue-500 text-white rounded-2xl shadow p-4 sm:p-6 flex flex-col justify-center text-center"
         >
           <p class="text-lg sm:text-xl md:text-2xl">Saldo Total</p>
-          <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold">
-            R$ 3.250,00
+          <h2
+            id="saldo-total"
+            class="text-3xl sm:text-4xl md:text-5xl font-bold"
+          >
+            R$ 0,00
           </h2>
         </div>
 
@@ -50,40 +56,11 @@
         >
           Últimas transações
         </h3>
-        <ul class="space-y-2 text-gray-700 text-base sm:text-lg">
-          <li
-            class="flex justify-between cursor-pointer hover:bg-gray-100 rounded-lg p-2 sm:p-3"
-          >
-            <a
-              href="transacoes.html?tipo=entrada&categoria=salario"
-              class="flex justify-between w-full"
-            >
-              <span>Salário</span>
-              <span class="text-green-500 font-bold">+ R$ 3.500,00</span>
-            </a>
-          </li>
-          <li
-            class="flex justify-between cursor-pointer hover:bg-gray-100 rounded-lg p-2 sm:p-3"
-          >
-            <a
-              href="transacoes.html?tipo=saida&categoria=mercado"
-              class="flex justify-between w-full"
-            >
-              <span>Mercado</span>
-              <span class="text-red-500 font-bold">- R$ 120,00</span>
-            </a>
-          </li>
-          <li
-            class="flex justify-between cursor-pointer hover:bg-gray-100 rounded-lg p-2 sm:p-3"
-          >
-            <a
-              href="transacoes.html?tipo=saida&categoria=uber"
-              class="flex justify-between w-full"
-            >
-              <span>Uber</span>
-              <span class="text-red-500 font-bold">- R$ 30,00</span>
-            </a>
-          </li>
+        <ul
+          id="lista-transacoes"
+          class="space-y-2 text-gray-700 text-base sm:text-lg"
+        >
+          <li class="text-gray-400 italic">Nenhuma transação encontrada.</li>
         </ul>
       </div>
     </main>
@@ -166,22 +143,75 @@
           alt="Ícone"
           style="width: 30px; height: 30px"
         />
-
         <span class="text-sm sm:text-base">Config.</span>
       </a>
     </nav>
 
-    <!-- Script Chart.js -->
+    <!-- Script -->
     <script>
+      // Carregar transações do localStorage
+      const transacoes = JSON.parse(localStorage.getItem("transacoes")) || [];
+
+      const saldoTotalEl = document.getElementById("saldo-total");
+      const listaTransacoes = document.getElementById("lista-transacoes");
+
+      // Calcular saldo total
+      const saldo = transacoes.reduce((acc, t) => {
+        return t.tipo === "entrada"
+          ? acc + Number(t.valor)
+          : acc - Number(t.valor);
+      }, 0);
+
+      saldoTotalEl.textContent = `R$ ${saldo.toFixed(2).replace(".", ",")}`;
+
+      // Mostrar últimas 5 transações
+      if (transacoes.length > 0) {
+        listaTransacoes.innerHTML = "";
+        const ultimas = transacoes.slice(-5).reverse();
+        ultimas.forEach((t) => {
+          const li = document.createElement("li");
+          li.className =
+            "flex justify-between cursor-pointer hover:bg-gray-100 rounded-lg p-2 sm:p-3";
+          li.innerHTML = `
+            <span>${t.descricao}</span>
+            <span class="${
+              t.tipo === "entrada" ? "text-green-500" : "text-red-500"
+            } font-bold">
+              ${t.tipo === "entrada" ? "+" : "-"} R$ ${Number(t.valor)
+            .toFixed(2)
+            .replace(".", ",")}
+            </span>
+          `;
+          listaTransacoes.appendChild(li);
+        });
+      }
+
+      // Gerar gráfico de evolução
       const ctx = document.getElementById("saldoChart").getContext("2d");
+      const saldosPorData = {};
+
+      transacoes.forEach((t) => {
+        const data = t.data || "Sem data";
+        saldosPorData[data] =
+          (saldosPorData[data] || 0) +
+          (t.tipo === "entrada" ? Number(t.valor) : -Number(t.valor));
+      });
+
+      const labels = Object.keys(saldosPorData);
+      let acumulado = 0;
+      const dataSaldo = labels.map((d) => {
+        acumulado += saldosPorData[d];
+        return acumulado;
+      });
+
       new Chart(ctx, {
         type: "line",
         data: {
-          labels: ["01", "05", "10", "15", "20", "25", "30"],
+          labels,
           datasets: [
             {
               label: "Saldo",
-              data: [2800, 3000, 2900, 3200, 3100, 3300, 3250],
+              data: dataSaldo,
               borderColor: "rgb(59, 130, 246)",
               backgroundColor: "rgba(59, 130, 246, 0.2)",
               fill: true,
@@ -195,6 +225,10 @@
           scales: { y: { beginAtZero: false } },
         },
       });
+    </script>
+    <script>
+      const nome = localStorage.getItem("nomeUsuario") || "Usuário";
+      document.getElementById("saudacao").textContent = `Olá, ${nome}!`;
     </script>
   </body>
 </html>

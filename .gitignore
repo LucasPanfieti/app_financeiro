@@ -1,0 +1,21 @@
+# # Node modules
+# node_modules/
+
+# # Logs
+# npm-debug.log*
+# yarn-debug.log*
+# yarn-error.log*
+# pnpm-debug.log*
+
+# # Environment files
+# .env
+# .env.local
+# .env.development.local
+# .env.test.local
+# .env.production.local
+
+# # macOS
+# .DS_Store
+
+# # Optional: ignore local database JSON (se não quiser subir)
+# database.json
